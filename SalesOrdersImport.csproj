@@ -54,6 +54,7 @@
       <FormCategory>UserForm</FormCategory>
     </None>
     <Compile Include="Controllers\ExcelFileController.cs" />
+    <Compile Include="Controllers\SalesOrderController.cs" />
     <Compile Include="DiManager.cs" />
     <Compile Include="Import.b1f.cs">
       <DependentUpon>Import.b1f</DependentUpon>

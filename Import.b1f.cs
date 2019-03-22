@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Threading;
 using System.Xml;
 using SalesOrdersImport.Controllers;
 using SalesOrdersImport.Helpers;
@@ -29,6 +30,7 @@ namespace SalesOrdersImport
             this.StaticText2 = ((SAPbouiCOM.StaticText)(this.GetItem("Item_5").Specific));
             this.EditText2 = ((SAPbouiCOM.EditText)(this.GetItem("Item_6").Specific));
             this.Button0 = ((SAPbouiCOM.Button)(this.GetItem("Item_7").Specific));
+            this.Button0.PressedAfter += new SAPbouiCOM._IButtonEvents_PressedAfterEventHandler(this.Button0_PressedAfter);
             this.Button1 = ((SAPbouiCOM.Button)(this.GetItem("Item_8").Specific));
             this.Button1.PressedAfter += new SAPbouiCOM._IButtonEvents_PressedAfterEventHandler(this.Button1_PressedAfter);
             this.Button2 = ((SAPbouiCOM.Button)(this.GetItem("Item_9").Specific));
@@ -125,6 +127,29 @@ namespace SalesOrdersImport
         private void Button2_PressedAfter(object sboObject, SBOItemEventArg pVal)
         {
             SAPbouiCOM.Framework.Application.SBO_Application.Forms.ActiveForm.Close();
+        }
+
+        private void Button0_PressedAfter(object sboObject, SBOItemEventArg pVal)
+        {
+            try
+            {
+                if (ComboBox0.Selected != null && ComboBox0.Selected != null && EditText2.Value != "")
+                {
+                    new Thread(() =>
+                    {
+                        Thread.CurrentThread.IsBackground = true;
+
+                        var data = excelFileController.ReadExcelFile(ComboBox0.Selected.Value, EditText0.Value);
+
+                    }).Start();
+                }
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+                throw;
+            }
+
         }
     }
 }
