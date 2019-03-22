@@ -21,6 +21,7 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -34,6 +35,9 @@
     <StartupObject>SalesOrdersImport.Program</StartupObject>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="ConverterLib_x64">
+      <HintPath>C:\Users\nkurdadze\Source\Repos\RS_GE\SAPApi\bin\Debug\ConverterLib_x64.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
@@ -46,12 +50,16 @@
     <Reference Include="SAPBusinessOneSDK" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Form1.b1f">
+    <None Include="Import.b1f">
       <FormCategory>UserForm</FormCategory>
     </None>
-    <Compile Include="Form1.b1f.cs">
-      <DependentUpon>Form1.b1f</DependentUpon>
+    <Compile Include="Controllers\ExcelFileController.cs" />
+    <Compile Include="DiManager.cs" />
+    <Compile Include="Import.b1f.cs">
+      <DependentUpon>Import.b1f</DependentUpon>
     </Compile>
+    <Compile Include="Helpers\Others.cs" />
+    <Compile Include="Helpers\ShowFolder.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Menu.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

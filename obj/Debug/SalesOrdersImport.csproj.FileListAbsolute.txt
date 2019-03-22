@@ -1,0 +1,7 @@
+d:\users\nkurdadze\documents\visual studio 2015\Projects\SalesOrdersImport\SalesOrdersImport\bin\Debug\SalesOrdersImport.exe
+d:\users\nkurdadze\documents\visual studio 2015\Projects\SalesOrdersImport\SalesOrdersImport\bin\Debug\SalesOrdersImport.pdb
+d:\users\nkurdadze\documents\visual studio 2015\Projects\SalesOrdersImport\SalesOrdersImport\bin\Debug\ConverterLib_x64.dll
+d:\users\nkurdadze\documents\visual studio 2015\Projects\SalesOrdersImport\SalesOrdersImport\bin\Debug\SAPBusinessOneSDK.dll
+d:\users\nkurdadze\documents\visual studio 2015\Projects\SalesOrdersImport\SalesOrdersImport\obj\Debug\SalesOrdersImport.csprojResolveAssemblyReference.cache
+d:\users\nkurdadze\documents\visual studio 2015\Projects\SalesOrdersImport\SalesOrdersImport\obj\Debug\SalesOrdersImport.exe
+d:\users\nkurdadze\documents\visual studio 2015\Projects\SalesOrdersImport\SalesOrdersImport\obj\Debug\SalesOrdersImport.pdb
