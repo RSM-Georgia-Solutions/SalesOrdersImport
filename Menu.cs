@@ -44,7 +44,7 @@ namespace SalesOrdersImport
 
                 // Create s sub menu
                 oCreationPackage.Type = SAPbouiCOM.BoMenuType.mt_STRING;
-                oCreationPackage.UniqueID = "SalesOrdersImport.import";
+                oCreationPackage.UniqueID = "SalesOrdersImport.Import";
                 oCreationPackage.String = "Import";
                 oMenus.AddEx(oCreationPackage);
             }
@@ -60,9 +60,9 @@ namespace SalesOrdersImport
 
             try
             {
-                if (pVal.BeforeAction && pVal.MenuUID == "SalesOrdersImport.import")
+                if (pVal.BeforeAction && pVal.MenuUID == "SalesOrdersImport.Import")
                 {
-                    import activeForm = new import();
+                    Import activeForm = new Import();
                     activeForm.Show();
                 }
             }

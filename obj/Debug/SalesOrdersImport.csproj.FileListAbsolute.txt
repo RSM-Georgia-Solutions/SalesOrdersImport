@@ -5,3 +5,10 @@ d:\users\nkurdadze\documents\visual studio 2015\Projects\SalesOrdersImport\Sales
 d:\users\nkurdadze\documents\visual studio 2015\Projects\SalesOrdersImport\SalesOrdersImport\obj\Debug\SalesOrdersImport.csprojResolveAssemblyReference.cache
 d:\users\nkurdadze\documents\visual studio 2015\Projects\SalesOrdersImport\SalesOrdersImport\obj\Debug\SalesOrdersImport.exe
 d:\users\nkurdadze\documents\visual studio 2015\Projects\SalesOrdersImport\SalesOrdersImport\obj\Debug\SalesOrdersImport.pdb
+C:\Users\rsmsadmin\Desktop\SalesORder\SalesOrdersImport\bin\Debug\SalesOrdersImport.exe
+C:\Users\rsmsadmin\Desktop\SalesORder\SalesOrdersImport\bin\Debug\SalesOrdersImport.pdb
+C:\Users\rsmsadmin\Desktop\SalesORder\SalesOrdersImport\bin\Debug\SAPBusinessOneSDK.dll
+C:\Users\rsmsadmin\Desktop\SalesORder\SalesOrdersImport\obj\Debug\SalesOrdersImport.csprojResolveAssemblyReference.cache
+C:\Users\rsmsadmin\Desktop\SalesORder\SalesOrdersImport\obj\Debug\SalesOrdersImport.exe
+C:\Users\rsmsadmin\Desktop\SalesORder\SalesOrdersImport\obj\Debug\SalesOrdersImport.pdb
+C:\Users\rsmsadmin\Desktop\SalesORder\SalesOrdersImport\bin\Debug\Antlr3.Runtime.dll

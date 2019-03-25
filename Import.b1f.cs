@@ -6,13 +6,14 @@ using SalesOrdersImport.Controllers;
 using SalesOrdersImport.Helpers;
 using SAPbouiCOM;
 using SAPbouiCOM.Framework;
+using SalesOrdersImport.Models;
 
 namespace SalesOrdersImport
 {
     [FormAttribute("SalesOrdersImport.Form1", "Import.b1f")]
-    class Form1 : UserFormBase
+    class Import : UserFormBase
     {
-        public Form1()
+        public Import()
         {
         }
 
@@ -133,6 +134,8 @@ namespace SalesOrdersImport
         {
             try
             {
+                string bpCode = EditText2.Value;
+
                 if (ComboBox0.Selected != null && ComboBox0.Selected != null && EditText2.Value != "")
                 {
                     new Thread(() =>
@@ -140,6 +143,73 @@ namespace SalesOrdersImport
                         Thread.CurrentThread.IsBackground = true;
 
                         var data = excelFileController.ReadExcelFile(ComboBox0.Selected.Value, EditText0.Value);
+                        var salesOrders = SalesOrderController.parseDataTableToSalesOrder(bpCode, data);
+                        SAPbouiCOM.ProgressBar ProgressBar = null;
+
+                        if (DiManager.Company.InTransaction)
+                        {
+                            DiManager.Company.StartTransaction();
+                        }
+                        foreach (var order in salesOrders)
+                        {
+                            try
+                            {
+                                ProgressBar = SAPbouiCOM.Framework.Application.SBO_Application.StatusBar.CreateProgressBar("Creating Sales Order", salesOrders.Count, false);
+                            }
+                            catch (Exception)
+                            {
+
+                            } 
+
+                            string err = order.Add();
+
+                            try
+                            {
+                                ProgressBar.Value++;
+                            }
+                            catch (Exception)
+                            {
+
+                            }
+
+                            if (!string.IsNullOrWhiteSpace(err))
+                            {
+                                SAPbouiCOM.Framework.Application.SBO_Application.MessageBox(err);
+                                if (DiManager.Company.InTransaction)
+                                {
+                                    DiManager.Company.EndTransaction(SAPbobsCOM.BoWfTransOpt.wf_RollBack);
+                                    try
+                                    {
+                                        ProgressBar.Stop();
+                                        return;
+                                    }
+                                    catch (Exception)
+                                    {
+                                    }
+                                    return;
+                                }
+                            }
+                            else
+                            {
+                                SAPbouiCOM.Framework.Application.SBO_Application.StatusBar.SetSystemMessage("წარმატება", BoMessageTime.bmt_Medium, BoStatusBarMessageType.smt_Success);
+                            }
+                        }
+
+                        if (DiManager.Company.InTransaction)
+                        {
+                            DiManager.Company.EndTransaction(SAPbobsCOM.BoWfTransOpt.wf_Commit);
+                        }
+
+                        try
+                        {
+                            ProgressBar.Stop();
+                        }
+                        catch (Exception)
+                        {
+
+                            
+                        }
+
 
                     }).Start();
                 }

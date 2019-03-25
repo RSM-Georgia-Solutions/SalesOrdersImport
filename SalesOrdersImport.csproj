@@ -35,6 +35,9 @@
     <StartupObject>SalesOrdersImport.Program</StartupObject>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Antlr3.Runtime">
+      <HintPath>..\..\Antlr3.Runtime.dll</HintPath>
+    </Reference>
     <Reference Include="ConverterLib_x64">
       <HintPath>C:\Users\nkurdadze\Source\Repos\RS_GE\SAPApi\bin\Debug\ConverterLib_x64.dll</HintPath>
     </Reference>
@@ -61,9 +64,12 @@
     </Compile>
     <Compile Include="Helpers\Others.cs" />
     <Compile Include="Helpers\ShowFolder.cs" />
+    <Compile Include="Models\SalesOrderModel.cs" />
+    <Compile Include="MoreLinq\MoreEnumerable.DistinctBy.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Menu.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <None Include="packages.config" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
