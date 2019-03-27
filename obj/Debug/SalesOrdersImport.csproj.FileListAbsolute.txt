@@ -8,6 +8,8 @@ d:\users\nkurdadze\documents\visual studio 2015\Projects\SalesOrdersImport\Sales
 C:\Users\rsmsadmin\Desktop\SalesORder\SalesOrdersImport\bin\Debug\SalesOrdersImport.exe
 C:\Users\rsmsadmin\Desktop\SalesORder\SalesOrdersImport\bin\Debug\SalesOrdersImport.pdb
 C:\Users\rsmsadmin\Desktop\SalesORder\SalesOrdersImport\bin\Debug\Antlr3.Runtime.dll
+C:\Users\rsmsadmin\Desktop\SalesORder\SalesOrdersImport\bin\Debug\ConverterLib_x64.dll
 C:\Users\rsmsadmin\Desktop\SalesORder\SalesOrdersImport\bin\Debug\SAPBusinessOneSDK.dll
+C:\Users\rsmsadmin\Desktop\SalesORder\SalesOrdersImport\obj\Debug\SalesOrdersImport.csprojResolveAssemblyReference.cache
 C:\Users\rsmsadmin\Desktop\SalesORder\SalesOrdersImport\obj\Debug\SalesOrdersImport.exe
 C:\Users\rsmsadmin\Desktop\SalesORder\SalesOrdersImport\obj\Debug\SalesOrdersImport.pdb

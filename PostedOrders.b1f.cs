@@ -40,6 +40,10 @@ namespace SalesOrdersImport
         private void OnCustomInitialize()
         {
             string query = string.Empty;
+            if (_orderCodes == null)
+            {
+                return;
+            }
             foreach (string orderCode in _orderCodes)
             {
                 query += orderCode + " as [Order Code],";

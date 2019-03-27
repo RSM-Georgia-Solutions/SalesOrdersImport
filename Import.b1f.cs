@@ -214,8 +214,11 @@ namespace SalesOrdersImport
                         { 
 
                         }
-                        PostedOrders postedOrders = new PostedOrders();
+                        PostedSalesOrders postedOrders = new PostedSalesOrders();
                         postedOrders.Show();
+                        PostedOrders postedOrders2 = new PostedOrders();
+                        postedOrders2.Show();
+
                     });                 
 
                 }
