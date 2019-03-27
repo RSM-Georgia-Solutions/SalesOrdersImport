@@ -34,11 +34,11 @@ namespace SalesOrdersImport.Models
             var res = salesOrder.Add();
             if (res != 0)
             {
-                return DiManager.Company.GetLastErrorDescription();
+                throw new Exception(DiManager.Company.GetLastErrorDescription());
             }
             else
             {
-                return "";
+                return DiManager.Company.GetNewObjectKey();
             }
         }
     }

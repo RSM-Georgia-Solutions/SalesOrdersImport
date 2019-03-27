@@ -7,6 +7,7 @@ using SalesOrdersImport.Helpers;
 using SAPbouiCOM;
 using SAPbouiCOM.Framework;
 using SalesOrdersImport.Models;
+using System.Threading.Tasks;
 
 namespace SalesOrdersImport
 {
@@ -130,6 +131,55 @@ namespace SalesOrdersImport
             SAPbouiCOM.Framework.Application.SBO_Application.Forms.ActiveForm.Close();
         }
 
+        private List<string> postSalesOrders(List<SalesOrderModel> salesOrders, ProgressBar ProgressBar)
+        {
+            List<string> salesOrderCodes = new List<string>();
+            foreach (var order in salesOrders)
+            {
+                try
+                {
+                    ProgressBar = SAPbouiCOM.Framework.Application.SBO_Application.StatusBar.CreateProgressBar("Creating Sales Order", salesOrders.Count, false);
+                }
+                catch (Exception)
+                {
+
+                }
+
+                try
+                {
+                    string err = order.Add();
+                    salesOrderCodes.Add(err);
+                }
+                catch (Exception e)
+                {
+                    SAPbouiCOM.Framework.Application.SBO_Application.MessageBox(e.Message);
+                    if (DiManager.Company.InTransaction)
+                    {
+                        DiManager.Company.EndTransaction(SAPbobsCOM.BoWfTransOpt.wf_RollBack);
+                    }
+                    try
+                    {
+                        ProgressBar.Stop();
+                    }
+                    catch (Exception)
+                    {
+                    }
+                    return new List<string>();
+                }
+                try
+                {
+                    ProgressBar.Value++;
+                }
+                catch (Exception)
+                {
+
+                } 
+                      
+            }
+            SAPbouiCOM.Framework.Application.SBO_Application.StatusBar.SetSystemMessage("წარმატება", BoMessageTime.bmt_Medium, BoStatusBarMessageType.smt_Success);
+            return salesOrderCodes;
+        }
+
         private void Button0_PressedAfter(object sboObject, SBOItemEventArg pVal)
         {
             try
@@ -138,63 +188,19 @@ namespace SalesOrdersImport
 
                 if (ComboBox0.Selected != null && ComboBox0.Selected != null && EditText2.Value != "")
                 {
-                    new Thread(() =>
+                    var data = excelFileController.ReadExcelFile(ComboBox0.Selected.Value, EditText0.Value);
+                    var salesOrders = SalesOrderController.parseDataTableToSalesOrder(bpCode, data);
+                    SAPbouiCOM.ProgressBar ProgressBar = null;
+
+                    if (DiManager.Company.InTransaction)
                     {
-                        Thread.CurrentThread.IsBackground = true;
+                        DiManager.Company.StartTransaction();
+                    }
 
-                        var data = excelFileController.ReadExcelFile(ComboBox0.Selected.Value, EditText0.Value);
-                        var salesOrders = SalesOrderController.parseDataTableToSalesOrder(bpCode, data);
-                        SAPbouiCOM.ProgressBar ProgressBar = null;
+                    List<string> salesOrderCodes = new List<string>();
 
-                        if (DiManager.Company.InTransaction)
-                        {
-                            DiManager.Company.StartTransaction();
-                        }
-                        foreach (var order in salesOrders)
-                        {
-                            try
-                            {
-                                ProgressBar = SAPbouiCOM.Framework.Application.SBO_Application.StatusBar.CreateProgressBar("Creating Sales Order", salesOrders.Count, false);
-                            }
-                            catch (Exception)
-                            {
-
-                            } 
-
-                            string err = order.Add();
-
-                            try
-                            {
-                                ProgressBar.Value++;
-                            }
-                            catch (Exception)
-                            {
-
-                            }
-
-                            if (!string.IsNullOrWhiteSpace(err))
-                            {
-                                SAPbouiCOM.Framework.Application.SBO_Application.MessageBox(err);
-                                if (DiManager.Company.InTransaction)
-                                {
-                                    DiManager.Company.EndTransaction(SAPbobsCOM.BoWfTransOpt.wf_RollBack);
-                                    try
-                                    {
-                                        ProgressBar.Stop();
-                                        return;
-                                    }
-                                    catch (Exception)
-                                    {
-                                    }
-                                    return;
-                                }
-                            }
-                            else
-                            {
-                                SAPbouiCOM.Framework.Application.SBO_Application.StatusBar.SetSystemMessage("წარმატება", BoMessageTime.bmt_Medium, BoStatusBarMessageType.smt_Success);
-                            }
-                        }
-
+                    Task task = Task.Run(() => salesOrderCodes = postSalesOrders(salesOrders, ProgressBar));
+                    task.ConfigureAwait(true).GetAwaiter().OnCompleted(()=> {
                         if (DiManager.Company.InTransaction)
                         {
                             DiManager.Company.EndTransaction(SAPbobsCOM.BoWfTransOpt.wf_Commit);
@@ -205,19 +211,18 @@ namespace SalesOrdersImport
                             ProgressBar.Stop();
                         }
                         catch (Exception)
-                        {
+                        { 
 
-                            
                         }
+                        PostedOrders postedOrders = new PostedOrders();
+                        postedOrders.Show();
+                    });                 
 
-
-                    }).Start();
                 }
             }
             catch (Exception e)
             {
-                Console.WriteLine(e);
-                throw;
+                Console.WriteLine(e); 
             }
 
         }
