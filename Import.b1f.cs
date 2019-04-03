@@ -182,6 +182,10 @@ namespace SalesOrdersImport
 
         private void Button0_PressedAfter(object sboObject, SBOItemEventArg pVal)
         {
+            PostedSalesOrders postedOrders3 = new PostedSalesOrders();
+            postedOrders3.Show();
+            PostedOrders postedOrders24 = new PostedOrders();
+            postedOrders24.Show();
             try
             {
                 string bpCode = EditText2.Value;
