@@ -134,17 +134,17 @@ namespace SalesOrdersImport
         private List<string> postSalesOrders(List<SalesOrderModel> salesOrders, ProgressBar ProgressBar)
         {
             List<string> salesOrderCodes = new List<string>();
+            try
+            {
+                ProgressBar = SAPbouiCOM.Framework.Application.SBO_Application.StatusBar.CreateProgressBar("Creating Sales Order", salesOrders.Count, false);
+            }
+            catch (Exception e)
+            {
+
+            }
+
             foreach (var order in salesOrders)
             {
-                try
-                {
-                    ProgressBar = SAPbouiCOM.Framework.Application.SBO_Application.StatusBar.CreateProgressBar("Creating Sales Order", salesOrders.Count, false);
-                }
-                catch (Exception)
-                {
-
-                }
-
                 try
                 {
                     string err = order.Add();
@@ -177,6 +177,13 @@ namespace SalesOrdersImport
                       
             }
             SAPbouiCOM.Framework.Application.SBO_Application.StatusBar.SetSystemMessage("წარმატება", BoMessageTime.bmt_Medium, BoStatusBarMessageType.smt_Success);
+            try
+            {
+                ProgressBar.Stop();
+            }
+            catch (Exception e)
+            {
+            }
             return salesOrderCodes;
         }
 
@@ -186,7 +193,7 @@ namespace SalesOrdersImport
             {
                 string bpCode = EditText2.Value;
 
-                if (ComboBox0.Selected != null && ComboBox0.Selected != null && EditText2.Value != "")
+                if (ComboBox0.Selected != null && EditText2.Value != "")
                 {
                     var data = excelFileController.ReadExcelFile(ComboBox0.Selected.Value, EditText0.Value);
                     var salesOrders = SalesOrderController.parseDataTableToSalesOrder(bpCode, data);
@@ -214,14 +221,15 @@ namespace SalesOrdersImport
                         { 
 
                         }
-                        PostedSalesOrders postedOrders = new PostedSalesOrders();
-                        postedOrders.Show();
-                        PostedOrders postedOrders2 = new PostedOrders();
-                        postedOrders2.Show();
-
-                    });                 
+                        //PostedSalesOrders postedOrders = new PostedSalesOrders();
+                        //postedOrders.Show();
+                        //PostedOrders postedOrders2 = new PostedOrders();
+                        //postedOrders2.Show();
+                    });
 
                 }
+
+
             }
             catch (Exception e)
             {

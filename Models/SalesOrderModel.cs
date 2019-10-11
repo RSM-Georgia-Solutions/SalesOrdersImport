@@ -13,17 +13,18 @@ namespace SalesOrdersImport.Models
         public string Address { get; set; }
         public int AddressCode { get; set; }
         public int LineNum { get; set; }
+        public string UadrCode { get; set; }
 
         public List<SalesOrderRowModel> rows = new List<SalesOrderRowModel>();
 
         public string Add()
         {
             SAPbobsCOM.Documents salesOrder = (SAPbobsCOM.Documents)DiManager.Company.GetBusinessObject(SAPbobsCOM.BoObjectTypes.oOrders);
-            salesOrder.CardCode = BpCode; 
+            salesOrder.CardCode = BpCode;
             salesOrder.DocDate = DateTime.Now;
             salesOrder.DocDueDate = DeliveryDate;
             salesOrder.Address2 = Address;
-
+            salesOrder.UserFields.Fields.Item("U_RSM_UADR_CODE").Value = UadrCode;
             foreach (var row in rows)
             {
                 salesOrder.Lines.ItemCode = row.ItemCode;

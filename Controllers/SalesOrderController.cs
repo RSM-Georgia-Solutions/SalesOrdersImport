@@ -23,7 +23,7 @@ namespace SalesOrdersImport.Controllers
                 SalesOrderModel salesOrder = new SalesOrderModel
                 {
                     BpCode = bpCode,
-                    DeliveryDate = DateTime.Parse(data.AsEnumerable().Where(c => c["Document Number"].ToString() == item.ToString()).First()["Delivery Date"].ToString()),
+                    DeliveryDate = DateTime.Parse(data.AsEnumerable().First(c => c["Document Number"].ToString() == item.ToString())["Delivery Date"].ToString()),
                     LineNum = int.Parse(item.ToString())
                 };
 
@@ -37,8 +37,9 @@ namespace SalesOrdersImport.Controllers
                 }
                 else
                 {
-                    string Address = DiManager.Recordset.Fields.Item("Name").Value.ToString() + Environment.NewLine + DiManager.Recordset.Fields.Item("U_District").Value.ToString() + Environment.NewLine + DiManager.Recordset.Fields.Item("U_ID").Value.ToString() + Environment.NewLine + DiManager.Recordset.Fields.Item("U_Address").Value.ToString();
+                    string Address = DiManager.Recordset.Fields.Item("Code").ToString() + Environment.NewLine + DiManager.Recordset.Fields.Item("Name").Value.ToString() + Environment.NewLine + DiManager.Recordset.Fields.Item("U_District").Value.ToString() + Environment.NewLine + DiManager.Recordset.Fields.Item("U_ID").Value.ToString() + Environment.NewLine + DiManager.Recordset.Fields.Item("U_Address").Value.ToString();
                     salesOrder.Address = Address;
+                    salesOrder.UadrCode = DiManager.Recordset.Fields.Item("Code").ToString();
                 }
                 foreach (var doc in data.AsEnumerable().Where(c => c["Document Number"].ToString() == item.ToString()))
                 {
