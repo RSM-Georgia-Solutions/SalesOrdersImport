@@ -37,7 +37,7 @@ namespace SalesOrdersImport.Controllers
                 }
                 else
                 {
-                    string Address = DiManager.Recordset.Fields.Item("Code").Value.ToString() + Environment.NewLine + DiManager.Recordset.Fields.Item("Name").Value.ToString() + Environment.NewLine + DiManager.Recordset.Fields.Item("U_District").Value.ToString() + Environment.NewLine + DiManager.Recordset.Fields.Item("U_ID").Value.ToString() + Environment.NewLine + DiManager.Recordset.Fields.Item("U_Address").Value.ToString();
+                    string Address = DiManager.Recordset.Fields.Item("Code").Value + Environment.NewLine + DiManager.Recordset.Fields.Item("Name").Value + Environment.NewLine + DiManager.Recordset.Fields.Item("U_District").Value + Environment.NewLine + DiManager.Recordset.Fields.Item("U_ID").Value + Environment.NewLine + DiManager.Recordset.Fields.Item("U_Address").Value;
                     salesOrder.Address = Address;
                     salesOrder.UadrCode = DiManager.Recordset.Fields.Item("Code").Value.ToString();
                 }
