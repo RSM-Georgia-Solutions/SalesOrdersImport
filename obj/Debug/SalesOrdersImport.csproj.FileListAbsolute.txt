@@ -13,3 +13,11 @@ C:\Users\rsmsadmin\Desktop\SalesORder\SalesOrdersImport\bin\Debug\SAPBusinessOne
 C:\Users\rsmsadmin\Desktop\SalesORder\SalesOrdersImport\obj\Debug\SalesOrdersImport.csprojResolveAssemblyReference.cache
 C:\Users\rsmsadmin\Desktop\SalesORder\SalesOrdersImport\obj\Debug\SalesOrdersImport.exe
 C:\Users\rsmsadmin\Desktop\SalesORder\SalesOrdersImport\obj\Debug\SalesOrdersImport.pdb
+C:\Users\Administrator\Desktop\Desktop 20190722\SalesORderImport\SalesOrdersImport\bin\Debug\SalesOrdersImport.exe
+C:\Users\Administrator\Desktop\Desktop 20190722\SalesORderImport\SalesOrdersImport\bin\Debug\SalesOrdersImport.pdb
+C:\Users\Administrator\Desktop\Desktop 20190722\SalesORderImport\SalesOrdersImport\bin\Debug\Antlr3.Runtime.dll
+C:\Users\Administrator\Desktop\Desktop 20190722\SalesORderImport\SalesOrdersImport\obj\Debug\SalesOrdersImport.csprojAssemblyReference.cache
+C:\Users\Administrator\Desktop\Desktop 20190722\SalesORderImport\SalesOrdersImport\obj\Debug\SalesOrdersImport.csproj.CoreCompileInputs.cache
+C:\Users\Administrator\Desktop\Desktop 20190722\SalesORderImport\SalesOrdersImport\obj\Debug\SalesOrdersImport.csproj.CopyComplete
+C:\Users\Administrator\Desktop\Desktop 20190722\SalesORderImport\SalesOrdersImport\obj\Debug\SalesOrdersImport.exe
+C:\Users\Administrator\Desktop\Desktop 20190722\SalesORderImport\SalesOrdersImport\obj\Debug\SalesOrdersImport.pdb

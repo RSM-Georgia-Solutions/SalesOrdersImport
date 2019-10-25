@@ -37,13 +37,14 @@ namespace SalesOrdersImport.Controllers
                 }
                 else
                 {
-                    string Address = DiManager.Recordset.Fields.Item("Code").ToString() + Environment.NewLine + DiManager.Recordset.Fields.Item("Name").Value.ToString() + Environment.NewLine + DiManager.Recordset.Fields.Item("U_District").Value.ToString() + Environment.NewLine + DiManager.Recordset.Fields.Item("U_ID").Value.ToString() + Environment.NewLine + DiManager.Recordset.Fields.Item("U_Address").Value.ToString();
+                    string Address = DiManager.Recordset.Fields.Item("Code").Value.ToString() + Environment.NewLine + DiManager.Recordset.Fields.Item("Name").Value.ToString() + Environment.NewLine + DiManager.Recordset.Fields.Item("U_District").Value.ToString() + Environment.NewLine + DiManager.Recordset.Fields.Item("U_ID").Value.ToString() + Environment.NewLine + DiManager.Recordset.Fields.Item("U_Address").Value.ToString();
                     salesOrder.Address = Address;
-                    salesOrder.UadrCode = DiManager.Recordset.Fields.Item("Code").ToString();
+                    salesOrder.UadrCode = DiManager.Recordset.Fields.Item("Code").Value.ToString();
                 }
                 foreach (var doc in data.AsEnumerable().Where(c => c["Document Number"].ToString() == item.ToString()))
                 {
                     var LineNum = int.Parse(doc["Document Number"].ToString());
+                    var x = doc["Quantity"].ToString();
                     var Quantity = int.Parse(doc["Quantity"].ToString());
                     var ItemCode = doc["Item Code"].ToString();
                     var AddressCode = int.Parse(doc["Address Code"].ToString());
