@@ -9,14 +9,29 @@ namespace SalesOrdersImport
     [FormAttribute("SalesOrdersImport.PostedOrders", "PostedOrders.b1f")]
     class PostedOrders : UserFormBase
     {
-        List<string> _orderCodes;
+        public List<string> OrderCodes { get; set; }
         //public PostedOrders(List<string> orderCodes)
         //{
         //    _orderCodes = orderCodes;
         //}
-        public PostedOrders()
+        public PostedOrders(List<string> orderCodes)
         {
-
+            OrderCodes = orderCodes;
+            string query = string.Empty;
+            if (OrderCodes == null)
+            {
+                return;
+            }
+            foreach (string orderCode in OrderCodes)
+            {
+                query += $"SELECT  '{ orderCode}'   as [Order Code] union all ";
+            }
+            query = query.Remove(query.Length - 10, 10);
+            Grid0.DataTable.ExecuteQuery(DiManager.QueryHanaTransalte($"{query}"));
+            SAPbouiCOM.EditTextColumn oEditCol;
+            oEditCol = ((SAPbouiCOM.EditTextColumn)(Grid0.Columns.Item("Order Code")));
+            oEditCol.LinkedObjectType = "17";
+            oEditCol.Editable = false;
         }
         /// <summary>
         /// Initialize components. Called by framework after form created.
@@ -39,17 +54,7 @@ namespace SalesOrdersImport
 
         private void OnCustomInitialize()
         {
-            string query = string.Empty;
-            if (_orderCodes == null)
-            {
-                return;
-            }
-            foreach (string orderCode in _orderCodes)
-            {
-                query += orderCode + " as [Order Code],";
-            }
-            query = query.Remove(query.Length - 1, 1);
-            Grid0.DataTable.ExecuteQuery(DiManager.QueryHanaTransalte($"SELECT {query}"));
+
         }
     }
 }

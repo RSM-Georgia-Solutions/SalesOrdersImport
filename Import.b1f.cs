@@ -211,6 +211,8 @@ namespace SalesOrdersImport
                         if (DiManager.Company.InTransaction)
                         {
                             DiManager.Company.EndTransaction(SAPbobsCOM.BoWfTransOpt.wf_Commit);
+                            SAPbouiCOM.Framework.Application.SBO_Application.StatusBar.SetSystemMessage("წარმატება", BoMessageTime.bmt_Medium, BoStatusBarMessageType.smt_Success);
+
                         }
 
                         try
@@ -223,8 +225,8 @@ namespace SalesOrdersImport
                         }
                         //PostedSalesOrders postedOrders = new PostedSalesOrders();
                         //postedOrders.Show();
-                        //PostedOrders postedOrders2 = new PostedOrders();
-                        //postedOrders2.Show();
+                        PostedOrders postedOrders2 = new PostedOrders(salesOrderCodes);                
+                        postedOrders2.Show();
                     });
 
                 }
