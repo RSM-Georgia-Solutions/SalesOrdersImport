@@ -173,8 +173,7 @@ namespace SalesOrdersImport
                 catch (Exception)
                 {
 
-                } 
-                      
+                }
             }
             SAPbouiCOM.Framework.Application.SBO_Application.StatusBar.SetSystemMessage("წარმატება", BoMessageTime.bmt_Medium, BoStatusBarMessageType.smt_Success);
             try

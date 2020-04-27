@@ -26,12 +26,20 @@ namespace SalesOrdersImport
             {
                 query += $"SELECT  '{ orderCode}'   as [Order Code] union all ";
             }
-            query = query.Remove(query.Length - 10, 10);
-            Grid0.DataTable.ExecuteQuery(DiManager.QueryHanaTransalte($"{query}"));
-            SAPbouiCOM.EditTextColumn oEditCol;
-            oEditCol = ((SAPbouiCOM.EditTextColumn)(Grid0.Columns.Item("Order Code")));
-            oEditCol.LinkedObjectType = "17";
-            oEditCol.Editable = false;
+            try
+            {
+                query = query.Remove(query.Length - 10, 10);
+
+                Grid0.DataTable.ExecuteQuery(DiManager.QueryHanaTransalte($"{query}"));
+                SAPbouiCOM.EditTextColumn oEditCol;
+                oEditCol = ((SAPbouiCOM.EditTextColumn)(Grid0.Columns.Item("Order Code")));
+                oEditCol.LinkedObjectType = "17";
+                oEditCol.Editable = false;
+            }
+            catch (Exception)
+            {
+
+            }
         }
         /// <summary>
         /// Initialize components. Called by framework after form created.

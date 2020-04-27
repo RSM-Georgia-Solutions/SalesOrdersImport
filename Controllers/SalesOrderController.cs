@@ -33,7 +33,7 @@ namespace SalesOrdersImport.Controllers
                 DiManager.Recordset.DoQuery(DiManager.QueryHanaTransalte($"SELECT * FROM [@RSM_UADR] WHERE Code = {AddressCodex}"));
                 if (DiManager.Recordset.EoF)
                 {
-                    SAPbouiCOM.Framework.Application.SBO_Application.SetStatusBarMessage("Address not Found");
+                   // SAPbouiCOM.Framework.Application.SBO_Application.SetStatusBarMessage("Address not Found");
                 }
                 else
                 {
