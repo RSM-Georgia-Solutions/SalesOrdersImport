@@ -14,6 +14,7 @@ namespace SalesOrdersImport.Models
         public int AddressCode { get; set; }
         public int LineNum { get; set; }
         public string UadrCode { get; set; }
+        public string OnlineOrderN { get; set; }
 
         public List<SalesOrderRowModel> rows = new List<SalesOrderRowModel>();
 
@@ -25,6 +26,8 @@ namespace SalesOrdersImport.Models
             salesOrder.DocDueDate = DeliveryDate;
             salesOrder.Address2 = Address;
             salesOrder.UserFields.Fields.Item("U_RSM_UADR_CODE").Value = UadrCode;
+            salesOrder.UserFields.Fields.Item("U_ONLN_ORDR_N").Value = OnlineOrderN;
+
             foreach (var row in rows)
             {
                 salesOrder.Lines.ItemCode = row.ItemCode;

@@ -30,6 +30,9 @@ namespace SalesOrdersImport.Controllers
                 int AddressCodex = int.Parse(data.AsEnumerable().Where(c => c["Document Number"].ToString() == item.ToString()).First()["Address Code"].ToString());
                 salesOrder.AddressCode = AddressCodex;
 
+                string OnlineOrderN = data.AsEnumerable().Where(c => c["Document Number"].ToString() == item.ToString()).First()["Online Order N"].ToString();
+                salesOrder.OnlineOrderN = OnlineOrderN;
+
                 DiManager.Recordset.DoQuery(DiManager.QueryHanaTransalte($"SELECT * FROM [@RSM_UADR] WHERE Code = {AddressCodex}"));
                 if (DiManager.Recordset.EoF)
                 {
@@ -49,6 +52,8 @@ namespace SalesOrdersImport.Controllers
                     var ItemCode = doc["Item Code"].ToString();
                     var AddressCode = int.Parse(doc["Address Code"].ToString());
                     var DeliveryDate = DateTime.Parse(doc["Delivery Date"].ToString());
+                    var OnlnOrdrN = doc["Online Order N"].ToString();
+
 
                     SalesOrderRowModel salesRow = new SalesOrderRowModel
                     {
