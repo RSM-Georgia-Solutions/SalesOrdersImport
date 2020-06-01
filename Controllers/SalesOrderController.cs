@@ -40,7 +40,7 @@ namespace SalesOrdersImport.Controllers
                 }
                 else
                 {
-                    string Address = DiManager.Recordset.Fields.Item("Code").Value + Environment.NewLine + DiManager.Recordset.Fields.Item("Name").Value + Environment.NewLine + DiManager.Recordset.Fields.Item("U_District").Value + Environment.NewLine + DiManager.Recordset.Fields.Item("U_ID").Value + Environment.NewLine + DiManager.Recordset.Fields.Item("U_Address").Value;
+                    string Address = DiManager.Recordset.Fields.Item("Code").Value + Environment.NewLine + DiManager.Recordset.Fields.Item("Name").Value + Environment.NewLine + DiManager.Recordset.Fields.Item("U_District").Value + Environment.NewLine + DiManager.Recordset.Fields.Item("U_ID").Value + Environment.NewLine + DiManager.Recordset.Fields.Item("U_Address").Value; 
                     salesOrder.Address = Address;
                     salesOrder.UadrCode = DiManager.Recordset.Fields.Item("Code").Value.ToString();
                 }
@@ -53,7 +53,6 @@ namespace SalesOrdersImport.Controllers
                     var AddressCode = int.Parse(doc["Address Code"].ToString());
                     var DeliveryDate = DateTime.Parse(doc["Delivery Date"].ToString());
                     var OnlnOrdrN = doc["Online Order N"].ToString();
-
 
                     SalesOrderRowModel salesRow = new SalesOrderRowModel
                     {

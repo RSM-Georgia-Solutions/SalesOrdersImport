@@ -20,10 +20,9 @@ C:\Users\Administrator\Desktop\Desktop 20190722\SalesORderImport\SalesOrdersImpo
 C:\Users\Administrator\Desktop\Desktop 20190722\SalesORderImport\SalesOrdersImport\obj\Debug\SalesOrdersImport.csproj.CopyComplete
 C:\Users\Administrator\Desktop\Desktop 20190722\SalesORderImport\SalesOrdersImport\obj\Debug\SalesOrdersImport.exe
 C:\Users\Administrator\Desktop\Desktop 20190722\SalesORderImport\SalesOrdersImport\obj\Debug\SalesOrdersImport.pdb
-C:\Users\sgachechiladze\Desktop\git\SalesOrdersImport\bin\Debug\SalesOrdersImport.exe
-C:\Users\sgachechiladze\Desktop\git\SalesOrdersImport\bin\Debug\SalesOrdersImport.pdb
-C:\Users\sgachechiladze\Desktop\git\SalesOrdersImport\obj\Debug\SalesOrdersImport.csprojAssemblyReference.cache
-C:\Users\sgachechiladze\Desktop\git\SalesOrdersImport\obj\Debug\SalesOrdersImport.csproj.CoreCompileInputs.cache
-C:\Users\sgachechiladze\Desktop\git\SalesOrdersImport\obj\Debug\SalesOrdersImport.csproj.CopyComplete
-C:\Users\sgachechiladze\Desktop\git\SalesOrdersImport\obj\Debug\SalesOrdersImport.exe
-C:\Users\sgachechiladze\Desktop\git\SalesOrdersImport\obj\Debug\SalesOrdersImport.pdb
+C:\Users\sgachechiladze\Desktop\SalesOrdersImport-master\bin\Debug\SalesOrdersImport.exe
+C:\Users\sgachechiladze\Desktop\SalesOrdersImport-master\bin\Debug\SalesOrdersImport.pdb
+C:\Users\sgachechiladze\Desktop\SalesOrdersImport-master\obj\Debug\SalesOrdersImport.csproj.CoreCompileInputs.cache
+C:\Users\sgachechiladze\Desktop\SalesOrdersImport-master\obj\Debug\SalesOrdersImport.csproj.CopyComplete
+C:\Users\sgachechiladze\Desktop\SalesOrdersImport-master\obj\Debug\SalesOrdersImport.exe
+C:\Users\sgachechiladze\Desktop\SalesOrdersImport-master\obj\Debug\SalesOrdersImport.pdb

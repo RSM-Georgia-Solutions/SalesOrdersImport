@@ -19,8 +19,8 @@ namespace SalesOrdersImport
             oMenuItem = Application.SBO_Application.Menus.Item("43520"); // moudles'
 
             oCreationPackage.Type = SAPbouiCOM.BoMenuType.mt_POPUP;
-            oCreationPackage.UniqueID = "SalesOrdersImport";
-            oCreationPackage.String = "SalesOrdersImport";
+            oCreationPackage.UniqueID = "OrdersImport";
+            oCreationPackage.String = "Sales/Purchase Import";
             oCreationPackage.Enabled = true;
             oCreationPackage.Position = -1;
 
@@ -39,18 +39,25 @@ namespace SalesOrdersImport
             try
             {
                 // Get the menu collection of the newly added pop-up item
-                oMenuItem = Application.SBO_Application.Menus.Item("SalesOrdersImport");
+                oMenuItem = Application.SBO_Application.Menus.Item("OrdersImport");
                 oMenus = oMenuItem.SubMenus;
 
                 // Create s sub menu
                 oCreationPackage.Type = SAPbouiCOM.BoMenuType.mt_STRING;
-                oCreationPackage.UniqueID = "SalesOrdersImport.Import";
-                oCreationPackage.String = "Import";
+                oCreationPackage.UniqueID = "Sales.Import";
+                oCreationPackage.String = "Sales Order Import";
                 oMenus.AddEx(oCreationPackage);
+
+                // Create s sub menu
+                oCreationPackage.Type = SAPbouiCOM.BoMenuType.mt_STRING;
+                oCreationPackage.UniqueID = "Purchase.Import";
+                oCreationPackage.String = "Purchase Orders Import";
+                oMenus.AddEx(oCreationPackage);
+
             }
             catch (Exception er)
             { //  Menu already exists
-                Application.SBO_Application.SetStatusBarMessage("Menu Already Exists", SAPbouiCOM.BoMessageTime.bmt_Short, true);
+              //Application.SBO_Application.SetStatusBarMessage("Menu Already Exists", SAPbouiCOM.BoMessageTime.bmt_Short, true);
             }
         }
 
@@ -60,7 +67,12 @@ namespace SalesOrdersImport
 
             try
             {
-                if (pVal.BeforeAction && pVal.MenuUID == "SalesOrdersImport.Import")
+                if (pVal.BeforeAction && pVal.MenuUID == "Sales.Import")
+                {
+                    Import activeForm = new Import();
+                    activeForm.Show();
+                }
+                else if (pVal.BeforeAction && pVal.MenuUID == "Purchase.Import")
                 {
                     Import activeForm = new Import();
                     activeForm.Show();
