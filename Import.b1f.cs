@@ -206,6 +206,7 @@ namespace SalesOrdersImport
                     List<string> salesOrderCodes = new List<string>();
 
                     Task task = Task.Run(() => salesOrderCodes = postSalesOrders(salesOrders, ProgressBar));
+
                     task.ConfigureAwait(true).GetAwaiter().OnCompleted(()=> {
                         if (DiManager.Company.InTransaction)
                         {

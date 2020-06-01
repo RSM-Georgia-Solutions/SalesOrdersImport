@@ -68,5 +68,104 @@ namespace SalesOrdersImport.Controllers
 
             return salesOrderModels;
         }
+
+        private List<string> postSalesOrders(List<SalesOrderModel> salesOrders, ProgressBar ProgressBar)
+        {
+            List<string> salesOrderCodes = new List<string>();
+            try
+            {
+                ProgressBar = SAPbouiCOM.Framework.Application.SBO_Application.StatusBar.CreateProgressBar("Creating Sales Order", salesOrders.Count, false);
+            }
+            catch (Exception e)
+            {
+
+            }
+
+            foreach (var order in salesOrders)
+            {
+                try
+                {
+                    string err = order.Add();
+                    salesOrderCodes.Add(err);
+                }
+                catch (Exception e)
+                {
+                    SAPbouiCOM.Framework.Application.SBO_Application.MessageBox(e.Message);
+                    if (DiManager.Company.InTransaction)
+                    {
+                        DiManager.Company.EndTransaction(SAPbobsCOM.BoWfTransOpt.wf_RollBack);
+                    }
+                    try
+                    {
+                        ProgressBar.Stop();
+                    }
+                    catch (Exception)
+                    {
+                    }
+                    return new List<string>();
+                }
+                try
+                {
+                    ProgressBar.Value++;
+                }
+                catch (Exception)
+                {
+
+                }
+            }
+            SAPbouiCOM.Framework.Application.SBO_Application.StatusBar.SetSystemMessage("წარმატება", BoMessageTime.bmt_Medium, BoStatusBarMessageType.smt_Success);
+            try
+            {
+                ProgressBar.Stop();
+            }
+            catch (Exception e)
+            {
+            }
+            return salesOrderCodes;
+        }
+
+        public void StartImport()
+        {
+            string bpCode = EditText2.Value;
+
+            if (ComboBox0.Selected != null && EditText2.Value != "")
+            {
+                var data = excelFileController.ReadExcelFile(ComboBox0.Selected.Value, EditText0.Value);
+                var salesOrders = SalesOrderController.parseDataTableToSalesOrder(bpCode, data);
+                SAPbouiCOM.ProgressBar ProgressBar = null;
+
+                if (DiManager.Company.InTransaction)
+                {
+                    DiManager.Company.StartTransaction();
+                }
+
+                List<string> salesOrderCodes = new List<string>();
+
+                Task task = Task.Run(() => salesOrderCodes = postSalesOrders(salesOrders, ProgressBar));
+
+                task.ConfigureAwait(true).GetAwaiter().OnCompleted(() => {
+                    if (DiManager.Company.InTransaction)
+                    {
+                        DiManager.Company.EndTransaction(SAPbobsCOM.BoWfTransOpt.wf_Commit);
+                        SAPbouiCOM.Framework.Application.SBO_Application.StatusBar.SetSystemMessage("წარმატება", BoMessageTime.bmt_Medium, BoStatusBarMessageType.smt_Success);
+
+                    }
+
+                    try
+                    {
+                        ProgressBar.Stop();
+                    }
+                    catch (Exception)
+                    {
+
+                    }
+                    //PostedSalesOrders postedOrders = new PostedSalesOrders();
+                    //postedOrders.Show();
+                    PostedOrders postedOrders2 = new PostedOrders(salesOrderCodes);
+                    postedOrders2.Show();
+                });
+
+            }
+        }
     }
 }
