@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 using SAPbouiCOM.Framework;
+using SalesOrdersImport.Controllers;
 
 namespace SalesOrdersImport
 {
@@ -70,11 +71,13 @@ namespace SalesOrdersImport
                 if (pVal.BeforeAction && pVal.MenuUID == "Sales.Import")
                 {
                     Import activeForm = new Import();
+                    activeForm.Controller = new SalesOrderController(activeForm.UIAPIRawForm, RSM.SAPB1.Support.Global.Company, new ExcelFileController());
                     activeForm.Show();
                 }
                 else if (pVal.BeforeAction && pVal.MenuUID == "Purchase.Import")
                 {
                     Import activeForm = new Import();
+                    activeForm.Controller = new PurchaseOrderController(activeForm.UIAPIRawForm, RSM.SAPB1.Support.Global.Company, new ExcelFileController());
                     activeForm.Show();
                 }
             }

@@ -6,7 +6,7 @@ using SAPbouiCOM.Framework;
 
 namespace SalesOrdersImport
 {
-    [FormAttribute("SalesOrdersImport.PostedSalesOrders", "PostedSalesOrders.b1f")]
+    [FormAttribute("SalesOrdersImport.PostedSalesOrders", "Forms/PostedSalesOrders.b1f")]
     class PostedSalesOrders : UserFormBase
     {
         public PostedSalesOrders()

@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace SalesOrdersImport.Controllers
 {
-    class ExcelFileController
+    public class ExcelFileController
     {
         public DataTable ReadExcelFile(string sheetName, string path)
         {
@@ -57,6 +57,7 @@ namespace SalesOrdersImport.Controllers
             }
             return sheets;
         }
+
 
     }
 }

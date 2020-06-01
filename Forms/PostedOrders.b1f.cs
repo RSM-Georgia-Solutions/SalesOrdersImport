@@ -6,7 +6,7 @@ using SAPbouiCOM.Framework;
 
 namespace SalesOrdersImport
 {
-    [FormAttribute("SalesOrdersImport.PostedOrders", "PostedOrders.b1f")]
+    [FormAttribute("SalesOrdersImport.PostedOrders", "Forms/PostedOrders.b1f")]
     class PostedOrders : UserFormBase
     {
         public List<string> OrderCodes { get; set; }
@@ -14,7 +14,7 @@ namespace SalesOrdersImport
         //{
         //    _orderCodes = orderCodes;
         //}
-        public PostedOrders(List<string> orderCodes)
+        public PostedOrders(List<string> orderCodes, OrderType orderType)
         {
             OrderCodes = orderCodes;
             string query = string.Empty;
@@ -33,7 +33,7 @@ namespace SalesOrdersImport
                 Grid0.DataTable.ExecuteQuery(DiManager.QueryHanaTransalte($"{query}"));
                 SAPbouiCOM.EditTextColumn oEditCol;
                 oEditCol = ((SAPbouiCOM.EditTextColumn)(Grid0.Columns.Item("Order Code")));
-                oEditCol.LinkedObjectType = "17";
+                oEditCol.LinkedObjectType = orderType == OrderType.Sales? "17" : "22";
                 oEditCol.Editable = false;
             }
             catch (Exception)

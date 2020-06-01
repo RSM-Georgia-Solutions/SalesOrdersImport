@@ -41,6 +41,9 @@
     <Reference Include="ConverterLib_x64">
       <HintPath>C:\Users\nkurdadze\Source\Repos\RS_GE\SAPApi\bin\Debug\ConverterLib_x64.dll</HintPath>
     </Reference>
+    <Reference Include="RSM.SAPB1.Support">
+      <HintPath>DLL\RSM.SAPB1.Support.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
@@ -53,33 +56,36 @@
     <Reference Include="SAPBusinessOneSDK" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Import.b1f">
+    <None Include="Forms\Import.b1f">
       <FormCategory>UserForm</FormCategory>
     </None>
+    <Compile Include="Controllers\BaseController.cs" />
     <Compile Include="Controllers\ExcelFileController.cs" />
+    <Compile Include="Controllers\PurchaseOrderController.cs" />
     <Compile Include="Controllers\SalesOrderController.cs" />
     <Compile Include="DiManager.cs" />
-    <Compile Include="Import.b1f.cs">
+    <Compile Include="Enums.cs" />
+    <Compile Include="Forms\Import.b1f.cs">
       <DependentUpon>Import.b1f</DependentUpon>
     </Compile>
     <Compile Include="Helpers\Others.cs" />
     <Compile Include="Helpers\ShowFolder.cs" />
-    <Compile Include="Models\SalesOrderModel.cs" />
+    <Compile Include="Models\OrderModel.cs" />
     <Compile Include="MoreLinq\MoreEnumerable.DistinctBy.cs" />
-    <Compile Include="PostedOrders.b1f.cs">
+    <Compile Include="Forms\PostedOrders.b1f.cs">
       <DependentUpon>PostedOrders.b1f</DependentUpon>
     </Compile>
-    <Compile Include="PostedSalesOrders.b1f.cs">
+    <Compile Include="Forms\PostedSalesOrders.b1f.cs">
       <DependentUpon>PostedSalesOrders.b1f</DependentUpon>
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Menu.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <None Include="packages.config" />
-    <None Include="PostedOrders.b1f">
+    <None Include="Forms\PostedOrders.b1f">
       <FormCategory>UserForm</FormCategory>
     </None>
-    <None Include="PostedSalesOrders.b1f">
+    <None Include="Forms\PostedSalesOrders.b1f">
       <FormCategory>UserForm</FormCategory>
     </None>
   </ItemGroup>

@@ -8,16 +8,18 @@ using SAPbouiCOM;
 using SAPbouiCOM.Framework;
 using SalesOrdersImport.Models;
 using System.Threading.Tasks;
+using RSM.SAPB1.Support;
 
 namespace SalesOrdersImport
 {
-    [FormAttribute("SalesOrdersImport.Form1", "Import.b1f")]
+    [FormAttribute("SalesOrdersImport.Form1", "Forms/Import.b1f")]
     class Import : UserFormBase
     {
         public Import()
         {
         }
 
+        public BaseController Controller { get; set; }
 
         ExcelFileController excelFileController = new ExcelFileController();
         /// <summary>
@@ -106,136 +108,50 @@ namespace SalesOrdersImport
         private SAPbouiCOM.Button Button1;
         private SAPbouiCOM.Button Button2;
 
-        private void addPath1(string value)
-        {
-            EditText0.Value = value;
 
-            if (value != "")
-            {
-                var sheetNames = excelFileController.ToExcelsSheetList(EditText0.Value);
-                Others.SetSheetNames(sheetNames, ComboBox0);
-            }
-        }
 
+        //folder dialog
         private void Button1_PressedAfter(object sboObject, SAPbouiCOM.SBOItemEventArg pVal)
         {
-            ShowFolder newFolder = new ShowFolder();
-            //add function to event 
-            newFolder.currFunc += addPath1;
-            //run method of folder class
-            newFolder.loadFolder();
+            RSM.SAPB1.Support.SelectFileDialog dialog = new SelectFileDialog("", "", "", DialogType.OPEN);
+            dialog.Open();
+            EditText0.Value = dialog.SelectedFile;
+
+            var sheets = excelFileController.ToExcelsSheetList(EditText0.Value);
+
+            while (ComboBox0.ValidValues.Count > 0)
+            {
+                ComboBox0.ValidValues.Remove(0, BoSearchKey.psk_Index);
+            }
+
+            for (int i = 0; i < sheets.Count; i++)
+            {
+                ComboBox0.ValidValues.Add(i.ToString(), sheets[i]);
+            }
+
+            if (ComboBox0.ValidValues.Count > 0)
+            {
+                ComboBox0.Select(0, BoSearchKey.psk_Index);
+            }
+
         }
 
+        //cancel
         private void Button2_PressedAfter(object sboObject, SBOItemEventArg pVal)
         {
             SAPbouiCOM.Framework.Application.SBO_Application.Forms.ActiveForm.Close();
         }
 
-        private List<string> postSalesOrders(List<SalesOrderModel> salesOrders, ProgressBar ProgressBar)
-        {
-            List<string> salesOrderCodes = new List<string>();
-            try
-            {
-                ProgressBar = SAPbouiCOM.Framework.Application.SBO_Application.StatusBar.CreateProgressBar("Creating Sales Order", salesOrders.Count, false);
-            }
-            catch (Exception e)
-            {
-
-            }
-
-            foreach (var order in salesOrders)
-            {
-                try
-                {
-                    string err = order.Add();
-                    salesOrderCodes.Add(err);
-                }
-                catch (Exception e)
-                {
-                    SAPbouiCOM.Framework.Application.SBO_Application.MessageBox(e.Message);
-                    if (DiManager.Company.InTransaction)
-                    {
-                        DiManager.Company.EndTransaction(SAPbobsCOM.BoWfTransOpt.wf_RollBack);
-                    }
-                    try
-                    {
-                        ProgressBar.Stop();
-                    }
-                    catch (Exception)
-                    {
-                    }
-                    return new List<string>();
-                }
-                try
-                {
-                    ProgressBar.Value++;
-                }
-                catch (Exception)
-                {
-
-                }
-            }
-            SAPbouiCOM.Framework.Application.SBO_Application.StatusBar.SetSystemMessage("წარმატება", BoMessageTime.bmt_Medium, BoStatusBarMessageType.smt_Success);
-            try
-            {
-                ProgressBar.Stop();
-            }
-            catch (Exception e)
-            {
-            }
-            return salesOrderCodes;
-        }
 
         private void Button0_PressedAfter(object sboObject, SBOItemEventArg pVal)
         {
             try
             {
-                string bpCode = EditText2.Value;
-
-                if (ComboBox0.Selected != null && EditText2.Value != "")
-                {
-                    var data = excelFileController.ReadExcelFile(ComboBox0.Selected.Value, EditText0.Value);
-                    var salesOrders = SalesOrderController.parseDataTableToSalesOrder(bpCode, data);
-                    SAPbouiCOM.ProgressBar ProgressBar = null;
-
-                    if (DiManager.Company.InTransaction)
-                    {
-                        DiManager.Company.StartTransaction();
-                    }
-
-                    List<string> salesOrderCodes = new List<string>();
-
-                    Task task = Task.Run(() => salesOrderCodes = postSalesOrders(salesOrders, ProgressBar));
-
-                    task.ConfigureAwait(true).GetAwaiter().OnCompleted(()=> {
-                        if (DiManager.Company.InTransaction)
-                        {
-                            DiManager.Company.EndTransaction(SAPbobsCOM.BoWfTransOpt.wf_Commit);
-                            SAPbouiCOM.Framework.Application.SBO_Application.StatusBar.SetSystemMessage("წარმატება", BoMessageTime.bmt_Medium, BoStatusBarMessageType.smt_Success);
-
-                        }
-
-                        try
-                        {
-                            ProgressBar.Stop();
-                        }
-                        catch (Exception)
-                        { 
-
-                        }
-                        //PostedSalesOrders postedOrders = new PostedSalesOrders();
-                        //postedOrders.Show();
-                        PostedOrders postedOrders2 = new PostedOrders(salesOrderCodes);                
-                        postedOrders2.Show();
-                    });
-
-                }
-
-
+                Controller.StartImport();
             }
             catch (Exception e)
             {
-                Console.WriteLine(e); 
+                Notifications.ShowMessage(e.Message, BoStatusBarMessageType.smt_Error);
             }
 
         }
