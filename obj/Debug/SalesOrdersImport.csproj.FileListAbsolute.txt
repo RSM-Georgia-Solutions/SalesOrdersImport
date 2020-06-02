@@ -33,3 +33,10 @@ C:\Users\blatsabidze\Documents\SalesOrdersImport\bin\Debug\SalesOrdersImport.pdb
 C:\Users\blatsabidze\Documents\SalesOrdersImport\bin\Debug\RSM.SAPB1.Support.dll
 C:\Users\blatsabidze\Documents\SalesOrdersImport\bin\Debug\SAPBusinessOneSDK.dll
 C:\Users\blatsabidze\Documents\SalesOrdersImport\bin\Debug\RSM.SAPB1.Support.pdb
+C:\Users\sgachechiladze\Desktop\git\SalesOrdersImport\obj\Debug\SalesOrdersImport.exe
+C:\Users\sgachechiladze\Desktop\git\SalesOrdersImport\obj\Debug\SalesOrdersImport.pdb
+C:\Users\sgachechiladze\Desktop\git\SalesOrdersImport\bin\Debug\SalesOrdersImport.exe
+C:\Users\sgachechiladze\Desktop\git\SalesOrdersImport\bin\Debug\SalesOrdersImport.pdb
+C:\Users\sgachechiladze\Desktop\git\SalesOrdersImport\bin\Debug\RSM.SAPB1.Support.dll
+C:\Users\sgachechiladze\Desktop\git\SalesOrdersImport\bin\Debug\RSM.SAPB1.Support.pdb
+C:\Users\sgachechiladze\Desktop\git\SalesOrdersImport\obj\Debug\SalesOrdersImport.csprojResolveAssemblyReference.cache

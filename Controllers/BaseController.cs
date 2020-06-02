@@ -33,7 +33,11 @@ namespace SalesOrdersImport.Controllers
         {
             if (ExcelSheet.Selected != null && CardCode.Value != "")
             {
-                var data = excelFileController.ReadExcelFile(ExcelSheet.Selected.Value, ExcelFile.Value);
+                var test = ExcelSheet.Value;
+                var test2 = ExcelSheet.Selected.Description;
+                var test3 = ExcelSheet.Selected.ToString();
+                var test4 = ExcelSheet.Selected.Value.ToString();
+                var data = excelFileController.ReadExcelFile(ExcelSheet.Selected.Description, ExcelFile.Value);
 
                 var salesOrders = ParseFile(CardCode.Value, data, OrderType);
                 SAPbouiCOM.ProgressBar ProgressBar = null;
@@ -89,26 +93,32 @@ namespace SalesOrdersImport.Controllers
                     OrderType = orderType
                 };
 
-                int AddressCodex = int.Parse(data.AsEnumerable().Where(c => c["Document Number"].ToString() == item.ToString()).First()["Address Code"].ToString());
-                salesOrder.AddressCode = AddressCodex;
+                
 
                 if (orderType == OrderType.Sales)
                 {
+                    int AddressCodex = int.Parse(data.AsEnumerable().Where(c => c["Document Number"].ToString() == item.ToString()).First()["Address Code"].ToString());
+                    salesOrder.AddressCode = AddressCodex;
+
+                    DiManager.Recordset.DoQuery(DiManager.QueryHanaTransalte($"SELECT * FROM [@RSM_UADR] WHERE Code = {AddressCodex}"));
+                    if (DiManager.Recordset.EoF)
+                    {
+                        // SAPbouiCOM.Framework.Application.SBO_Application.SetStatusBarMessage("Address not Found");
+                    }
+                    else
+                    {
+                        string Address = DiManager.Recordset.Fields.Item("Code").Value + Environment.NewLine + DiManager.Recordset.Fields.Item("Name").Value + Environment.NewLine + DiManager.Recordset.Fields.Item("U_District").Value + Environment.NewLine + DiManager.Recordset.Fields.Item("U_ID").Value + Environment.NewLine + DiManager.Recordset.Fields.Item("U_Address").Value;
+                        salesOrder.Address = Address;
+                        salesOrder.UadrCode = DiManager.Recordset.Fields.Item("Code").Value.ToString();
+                    }
+
                     string OnlineOrderN = data.AsEnumerable().Where(c => c["Document Number"].ToString() == item.ToString()).First()["Online Order N"].ToString();
                     salesOrder.OnlineOrderN = OnlineOrderN;
+
                 }
 
-                DiManager.Recordset.DoQuery(DiManager.QueryHanaTransalte($"SELECT * FROM [@RSM_UADR] WHERE Code = {AddressCodex}"));
-                if (DiManager.Recordset.EoF)
-                {
-                    // SAPbouiCOM.Framework.Application.SBO_Application.SetStatusBarMessage("Address not Found");
-                }
-                else
-                {
-                    string Address = DiManager.Recordset.Fields.Item("Code").Value + Environment.NewLine + DiManager.Recordset.Fields.Item("Name").Value + Environment.NewLine + DiManager.Recordset.Fields.Item("U_District").Value + Environment.NewLine + DiManager.Recordset.Fields.Item("U_ID").Value + Environment.NewLine + DiManager.Recordset.Fields.Item("U_Address").Value;
-                    salesOrder.Address = Address;
-                    salesOrder.UadrCode = DiManager.Recordset.Fields.Item("Code").Value.ToString();
-                }
+
+                
                 foreach (var doc in data.AsEnumerable().Where(c => c["Document Number"].ToString() == item.ToString()))
                 {
                     var Quantity = int.Parse(doc["Quantity"].ToString());
@@ -127,7 +137,7 @@ namespace SalesOrdersImport.Controllers
             }
 
             return salesOrderModels;
-        }
+        }///
 
         protected List<string> PostOrders(List<OrderModel> orders, ProgressBar ProgressBar)
         {
@@ -145,7 +155,16 @@ namespace SalesOrdersImport.Controllers
             {
                 try
                 {
+                    if(OrderType == OrderType.Purchase)
+                    {
+                        order.Address = "";
+                        order.OnlineOrderN = "";
+                        order.UadrCode = "";
+                    }
+                    
                     string err = order.Add();
+                    
+
                     salesOrderCodes.Add(err);
                 }
                 catch (Exception e)
