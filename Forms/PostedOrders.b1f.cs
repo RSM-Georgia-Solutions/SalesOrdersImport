@@ -62,7 +62,7 @@ namespace SalesOrdersImport
 
         private void OnCustomInitialize()
         {
-
+            UIAPIRawForm.Title = "დაპოსტილი Order-ები:";
         }
     }
 }
