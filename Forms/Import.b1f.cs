@@ -63,6 +63,7 @@ namespace SalesOrdersImport
             BubbleEvent = true;
             if (pVal.EventType == BoEventTypes.et_CHOOSE_FROM_LIST)
             {
+
                 IChooseFromListEvent oCFLEvento = null;
                 oCFLEvento = ((IChooseFromListEvent)(pVal));
                 string sCFL_ID = null;
@@ -70,7 +71,20 @@ namespace SalesOrdersImport
                 Form oForm = null;
                 oForm = SAPbouiCOM.Framework.Application.SBO_Application.Forms.Item(FormUID);
                 SAPbouiCOM.ChooseFromList oCFL = null;
+
                 oCFL = oForm.ChooseFromLists.Item(sCFL_ID);
+                
+                SAPbouiCOM.Conditions oCons = oCFL.GetConditions();
+                SAPbouiCOM.Condition oCon = null;
+                oCon = oCons.Count==0?oCons.Add():oCons.Item(0);
+                oCon.Alias = "CardType";
+                oCon.Operation = SAPbouiCOM.BoConditionOperation.co_EQUAL;
+
+                oCon.CondVal = Controller.OrderType == OrderType.Purchase ? "S" : "C";
+                
+                oCFL.SetConditions(oCons);
+                
+
                 if (oCFLEvento.BeforeAction == false)
                 {
                     DataTable oDataTable = null;

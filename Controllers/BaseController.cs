@@ -7,6 +7,7 @@ using SAPbouiCOM;
 using SalesOrdersImport.Models;
 using System.Data;
 using MoreLinq;
+using SAPbobsCOM;
 
 namespace SalesOrdersImport.Controllers
 {
@@ -87,6 +88,7 @@ namespace SalesOrdersImport.Controllers
             {
                 OrderModel salesOrder = new OrderModel
                 {
+                    
                     BpCode = bpCode,
                     DeliveryDate = DateTime.Parse(data.AsEnumerable().First(c => c["Document Number"].ToString() == item.ToString())["Delivery Date"].ToString()),
                     LineNum = int.Parse(item.ToString()),
@@ -117,12 +119,30 @@ namespace SalesOrdersImport.Controllers
 
                 }
 
-
                 
                 foreach (var doc in data.AsEnumerable().Where(c => c["Document Number"].ToString() == item.ToString()))
                 {
                     var Quantity = int.Parse(doc["Quantity"].ToString());
                     var ItemCode = doc["Item Code"].ToString();
+                   
+                    Recordset oRecordSet = (SAPbobsCOM.Recordset)DiManager.Company.GetBusinessObject(SAPbobsCOM.BoObjectTypes.BoRecordset);
+                    var query = $"SELECT \"CardCode\" FROM OITM WHERE \"ItemCode\"= {ItemCode}";
+                    oRecordSet.DoQuery($"SELECT \"CardCode\" FROM OITM WHERE \"ItemCode\"= '{ItemCode}'");
+                   
+                    
+                    string queryCardCode = "";
+                    while (!oRecordSet.EoF)
+                    {
+                        queryCardCode = oRecordSet.Fields.Item("CardCode").Value.ToString();
+                        oRecordSet.MoveNext();
+                    }
+
+                    if (CardCode.ToString()!=queryCardCode)
+                    {
+                        SAPbouiCOM.Framework.Application.SBO_Application.MessageBox(ItemCode+ " არ ეკუთვნის არჩეულ BP-ს");
+                        throw new Exception("");
+                    }
+                    
 
                     OrderRowModel salesRow = new OrderRowModel
                     {
